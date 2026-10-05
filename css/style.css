@@ -222,7 +222,7 @@ h3 { font-size: 1.3rem; }
 .lg-free { background: var(--free); }
 .lg-taken { background: var(--taken); }
 .lg-pending { background: var(--pending); }
-.lg-couch { background: var(--free); width: 16px; height: 8px; }
+.lg-couch { background: transparent; border: 1.5px dashed var(--free); border-radius: 50%; }
 .lg-held { background: var(--snow); border: 2px solid var(--held); }
 .cal-loading { color: var(--muted); font-size: .9rem; margin: .6rem 0 0; }
 
@@ -245,7 +245,8 @@ h3 { font-size: 1.3rem; }
 .beds i.t { background: var(--taken); }
 .beds i.p { background: var(--pending); }
 .beds i.h { background: var(--snow); box-shadow: inset 0 0 0 1.5px var(--held); }
-.beds i.couch { width: 10px; border-radius: 3px; }
+/* The couch: same dot, but a dashed outline while free — an extra spot for when it's needed. */
+.beds i.couch:not(.t):not(.p):not(.h) { background: transparent; border: 1.5px dashed var(--free); }
 .day.full { background: #f8e9e5; color: #a78d86; }
 .day.full .num { text-decoration: line-through; }
 .day.in-range { background: #fdf0dd; border-color: var(--amber); }
