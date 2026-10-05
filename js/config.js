@@ -19,7 +19,8 @@ window.CONFIG = {
   tripEnd: "2027-03-21",
   totalBeds: 4,
   hostBeds: 1, // you occupy one berth for the whole stay
-  maxGroupSize: 3,
+  weekendExtraBeds: 1, // the couch: an extra spot on Friday and Saturday nights only
+  maxGroupSize: 4,
 
   // Booking closes and the price gets fixed at this moment (local time, CET).
   lockDate: "2027-02-01T00:00:00+01:00",
@@ -51,7 +52,7 @@ window.CONFIG = {
 
   // Cottage facts shown on the homepage. Edit freely.
   features: [
-    { icon: "bed", title: "4 berths", text: "A double bedroom plus a bunk bed in the stube. One berth is mine; three are up for grabs." },
+    { icon: "bed", title: "4 berths", text: "A double bedroom plus a bunk bed in the stube. One berth is mine; three are up for grabs, plus the couch on Friday and Saturday nights." },
     { icon: "mountain", title: "Val di Fassa", text: "In Pera di Fassa, at the foot of the Catinaccio / Rosengarten group." },
     { icon: "ski", title: "Dolomiti Superski", text: "Buffaure, Catinaccio and the Sella Ronda are a short drive or ski-bus ride away." },
     { icon: "fire", title: "Après-ski base", text: "Come back to a warm stube, shared dinners and plenty of grappa-fuelled planning." },

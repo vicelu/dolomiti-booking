@@ -36,7 +36,7 @@ If you change `Code.gs` later, go to **Deploy → Manage deployments → Edit �
 3. Share `https://<you>.github.io/<repo>/` with your friends.
 
 ## How it works
-- A friend picks dates and a group size (1–3) and sends the form. The request is saved as **pending**, you get an email with Approve and Decline buttons, and the friend gets a "request received" email.
+- A friend picks dates and a group size (1–4; 4 only fits on Friday and Saturday nights, when the couch is free) and sends the form. The request is saved as **pending**, you get an email with Approve and Decline buttons, and the friend gets a "request received" email.
 - **Approve** marks the request as approved, emails the friend and fills the berths on everyone's calendar. Approval is blocked if it would overbook any night.
 - Pending requests appear in amber on the calendar, and approved stays appear in red.
 - You can also edit the `status` column in the Sheet directly. Valid values are `pending`, `approved` and `declined`.
@@ -45,7 +45,7 @@ If you change `Code.gs` later, go to **Deploy → Manage deployments → Edit �
 ## Car-share pools
 For people who'd rather come together and share a car:
 - Anyone picks dates and clicks **Start a car-share pool for these dates**. The pool appears under **Car share** on the site and as outlined dots ("pre-reserved") on the calendar.
-- Others **join** with their name, email, group size, where they're leaving from, and whether they can drive (and how many free seats they have). A pool can hold up to the 3 free berths.
+- Others **join** with their name, email, group size, where they're leaving from, and whether they can drive (and how many free seats they have). A pool can hold up to the 3 free berths, or 4 if all its nights are Friday or Saturday nights.
 - Members agree on who drives and where to pick people up in the **comments** and the **travel plan** (driver, departure, pickups, return trip, notes). Non-members can comment too, for example to ask before joining.
 - Each member clicks **I'm in**. Any change to the group or the plan resets everyone's confirmation. Once the last member confirms, the pool becomes a single **pending** booking request. You get the usual Approve/Decline email listing all members and the travel plan, and everyone gets the receipt and decision emails.
 - Pools are a **soft hold**: they don't block other bookings. If someone else gets approved on those nights first, the pool shows a warning and can't be submitted until it fits again.
@@ -60,5 +60,6 @@ In `js/config.js`:
 
 ## Other settings
 - `location`: the map pin is approximate (Pera di Fassa, where Strada de Gardecia starts). To fix it, right-click the exact spot in Google Maps and paste the coordinates here.
+- `weekendExtraBeds`: extra spots on Friday and Saturday nights (the couch). The default is `1`. It must match `WEEKEND_EXTRA_BEDS` in `Code.gs`, and `maxGroupSize` must match `MAX_GROUP`. A couch night costs the same as a bed night and counts in the price split like any other person-night.
 - `showGuestNames`: shows the first names of approved guests in the calendar tooltips.
 - `skiAreas`: the resort list and markers. The figures are approximate.

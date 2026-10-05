@@ -222,6 +222,7 @@ h3 { font-size: 1.3rem; }
 .lg-free { background: var(--free); }
 .lg-taken { background: var(--taken); }
 .lg-pending { background: var(--pending); }
+.lg-couch { background: var(--free); width: 16px; height: 8px; }
 .lg-held { background: var(--snow); border: 2px solid var(--held); }
 .cal-loading { color: var(--muted); font-size: .9rem; margin: .6rem 0 0; }
 
@@ -244,6 +245,7 @@ h3 { font-size: 1.3rem; }
 .beds i.t { background: var(--taken); }
 .beds i.p { background: var(--pending); }
 .beds i.h { background: var(--snow); box-shadow: inset 0 0 0 1.5px var(--held); }
+.beds i.couch { width: 10px; border-radius: 3px; }
 .day.full { background: #f8e9e5; color: #a78d86; }
 .day.full .num { text-decoration: line-through; }
 .day.in-range { background: #fdf0dd; border-color: var(--amber); }
@@ -272,7 +274,7 @@ h3 { font-size: 1.3rem; }
 .opt { font-weight: 400; color: var(--muted); }
 .group-size { border: 0; padding: 0; margin: 0; }
 .group-size legend { font-weight: 600; font-size: .92rem; margin-bottom: .4rem; }
-.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
 .seg label { cursor: pointer; }
 .seg input { position: absolute; opacity: 0; pointer-events: none; }
 .seg span {

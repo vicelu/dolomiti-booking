@@ -19,7 +19,8 @@ const SETTINGS = {
   TRIP_START: "2027-02-13",
   TRIP_END: "2027-03-21",
   SPARE_BEDS: 3,
-  MAX_GROUP: 3,
+  WEEKEND_EXTRA_BEDS: 1, // the couch, on Friday and Saturday nights only
+  MAX_GROUP: 4,
   LOCK_DATE: "2027-02-01T00:00:00+01:00",
   SHEET_NAME: "Bookings",
   // Only needed if you created the script at script.google.com instead of via the Sheet:
@@ -125,7 +126,13 @@ function fullNights_(arrival, departure, size, ignoreId) {
     if (b.status !== "approved" || b.id === ignoreId) return;
     nightsBetween_(b.arrival, b.departure).forEach(function (n) { taken[n] = (taken[n] || 0) + Number(b.groupSize); });
   });
-  return nightsBetween_(arrival, departure).filter(function (n) { return (taken[n] || 0) + size > SETTINGS.SPARE_BEDS; });
+  return nightsBetween_(arrival, departure).filter(function (n) { return (taken[n] || 0) + size > capacity_(n); });
+}
+
+/** Guest berths on a given night: the spare beds, plus the couch on Friday and Saturday nights. */
+function capacity_(night) {
+  const dow = new Date(night + "T00:00:00Z").getUTCDay();
+  return SETTINGS.SPARE_BEDS + (dow === 5 || dow === 6 ? SETTINGS.WEEKEND_EXTRA_BEDS : 0);
 }
 
 function decide_(id, token, action) {
@@ -242,7 +249,6 @@ function poolJoin_(d) {
   if (ctx.members.some(function (x) { return x.email.toLowerCase() === m.email.toLowerCase(); }))
     return { ok: false, error: "That email is already in this pool. Use the link from your email to manage it." };
   const total = groupTotal_(ctx.members) + m.groupSize;
-  if (total > SETTINGS.SPARE_BEDS) return { ok: false, error: "Only " + (SETTINGS.SPARE_BEDS - groupTotal_(ctx.members)) + " berth(s) left in this pool." };
   const full = fullNights_(ctx.pool.arrival, ctx.pool.departure, total, null);
   if (full.length) return { ok: false, error: "Not enough free berths on: " + full.join(", ") + "." };
 
@@ -268,7 +274,7 @@ function poolUpdate_(d) {
     if (ctx.pool.status !== "open") return { ok: false, error: "The booking was already requested — ask the host to change the group size." };
     if (isLocked_()) return { ok: false, error: "Booking is closed." };
     const total = groupTotal_(ctx.members) - Number(me.groupSize) + m.groupSize;
-    if (total > SETTINGS.SPARE_BEDS || fullNights_(ctx.pool.arrival, ctx.pool.departure, total, null).length)
+    if (fullNights_(ctx.pool.arrival, ctx.pool.departure, total, null).length)
       return { ok: false, error: "Not enough free berths for that group size." };
     patch.groupSize = String(m.groupSize);
     resetConfirmations_(ctx);

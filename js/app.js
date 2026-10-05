@@ -19,7 +19,11 @@
 
   const TRIP_NIGHTS = nightsOf(C.tripStart, C.tripEnd);
   const SPARE = C.totalBeds - C.hostBeds;
-  const MAX_PN = TRIP_NIGHTS.length * SPARE;
+  // The couch adds C.weekendExtraBeds spots on Friday and Saturday nights.
+  const isWeekendNight = (d) => [5, 6].includes(new Date(toMs(d)).getUTCDay());
+  const capOn = (d) => SPARE + (isWeekendNight(d) ? C.weekendExtraBeds || 0 : 0);
+  const MAX_CAP = SPARE + (C.weekendExtraBeds || 0);
+  const MAX_PN = TRIP_NIGHTS.reduce((sum, d) => sum + capOn(d), 0);
   const HOST_PN = TRIP_NIGHTS.length * C.hostBeds;
   const LOCK_MS = new Date(C.lockDate).getTime();
   const isLocked = () => Date.now() >= LOCK_MS;
@@ -49,7 +53,7 @@
       for (const d of nightsOf(p.arrival, p.departure)) if (occ[d]) occ[d].held += poolSize(p);
     }
   }
-  const freeOn = (d) => (occ[d] ? Math.max(0, SPARE - occ[d].taken) : 0);
+  const freeOn = (d) => (occ[d] ? Math.max(0, capOn(d) - occ[d].taken) : 0);
   const personNights = (status) =>
     bookings.filter((b) => b.status === status)
       .reduce((sum, b) => sum + nightsOf(b.arrival, b.departure).filter((d) => occ[d]).length * b.groupSize, 0);
@@ -421,10 +425,11 @@
           const o = occ[d], free = freeOn(d);
           const pend = Math.min(o.pending, free);
           const held = Math.min(o.held, free - pend);
-          for (let i = 0; i < SPARE; i++)
-            beds += `<i class="${i < o.taken ? "t" : i < o.taken + pend ? "p" : i < o.taken + pend + held ? "h" : ""}"></i>`;
+          const cap = capOn(d);
+          for (let i = 0; i < cap; i++)
+            beds += `<i class="${i < o.taken ? "t" : i < o.taken + pend ? "p" : i < o.taken + pend + held ? "h" : ""}${i >= SPARE ? " couch" : ""}"></i>`;
           if (free === 0) cls.push("full");
-          title = `${fmt(d)}: ${free} of ${SPARE} berths free` +
+          title = `${fmt(d)}: ${free} of ${cap} spots free${cap > SPARE ? " (incl. the couch)" : ""}` +
             (C.showGuestNames && o.names.length ? ` · staying: ${o.names.join(", ")}` : "") +
             (o.pending ? ` · ${o.pending} pending` : "") +
             (o.held ? ` · ${o.held} pre-reserved in car-share pools` : "");
@@ -498,7 +503,7 @@
     const sum = $("#summary");
     // Disable group sizes that can't fit the whole selected range.
     const nights = selectionNights();
-    const cap = nights.length ? Math.min(...nights.map(freeOn)) : (selStart ? freeOn(selStart) : SPARE);
+    const cap = nights.length ? Math.min(...nights.map(freeOn)) : (selStart ? freeOn(selStart) : MAX_CAP);
     document.querySelectorAll('input[name="groupSize"]').forEach((r) => (r.disabled = +r.value > Math.max(cap, 0) || isLocked()));
 
     applyPoolFilter();
