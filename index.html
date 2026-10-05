@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ciasa Irma · Dolomites Ski Trip 2027</title>
+  <meta name="description" content="Join the Dolomites ski trip at Ciasa Irma, Val di Fassa — 13 Feb to 21 Mar 2027. Pick your dates and grab a berth.">
+  <meta property="og:title" content="Ciasa Irma · Dolomites Ski Trip 2027">
+  <meta property="og:description" content="Free berths at a cosy cottage in Val di Fassa. Pick your dates and join the ski trip!">
+  <meta property="og:image" content="assets/images/images-trn-1-6f074f0a-a2c0-4992-8a87-d35fffa262d7-99-image.jpg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="nav" id="nav">
+    <a href="#top" class="brand"><span class="brand-mark" aria-hidden="true">▲</span> Ciasa Irma</a>
+    <nav>
+      <a href="#deal">How it works</a>
+      <a href="#cottage">The cottage</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Location</a>
+      <a href="#book" class="nav-cta">Book a berth</a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO / INTRO ===== -->
+  <section class="hero" id="top">
+    <canvas id="snow" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <p class="eyebrow">Val di Fassa · Dolomites · 13 Feb – 21 Mar 2027</p>
+      <h1>Come ski the Dolomites<br><em>at Ciasa Irma</em></h1>
+      <p class="lede">
+        I've got a cosy mountain cottage in Val di Fassa for five weeks of winter.
+        There are four berths: one is mine for the whole trip, and <strong>three are free for you</strong>.
+        Come for a weekend, a week, or longer — whenever there's room, you're in.
+      </p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-primary">Pick your dates</a>
+        <a href="#deal" class="btn btn-ghost">How the price works</a>
+      </div>
+      <div class="hero-stats" id="heroStats">
+        <div><span class="stat-num" id="statNights">36</span><span class="stat-label">nights on the mountain</span></div>
+        <div><span class="stat-num" id="statFree">—</span><span class="stat-label">free berth-nights left</span></div>
+        <div><span class="stat-num" id="statCountdown">—</span><span class="stat-label" id="statCountdownLabel">until booking closes</span></div>
+      </div>
+    </div>
+    <svg class="hero-mountains" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,220 L0,150 L120,90 L190,130 L300,40 L380,110 L450,80 L560,150 L660,60 L740,120 L820,30 L930,140 L1010,95 L1100,150 L1210,70 L1300,120 L1380,90 L1440,110 L1440,220 Z" class="m-back"/>
+      <path d="M0,220 L0,180 L90,150 L170,175 L260,120 L350,170 L470,140 L560,185 L690,130 L800,175 L900,150 L1020,190 L1130,140 L1240,180 L1350,150 L1440,170 L1440,220 Z" class="m-front"/>
+    </svg>
+  </section>
+
+  <main>
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="section" id="deal">
+      <div class="container">
+        <p class="eyebrow">The deal</p>
+        <h2>The more of us, the cheaper it gets</h2>
+        <div class="steps">
+          <article class="step">
+            <span class="step-num">1</span>
+            <h3>Request your dates</h3>
+            <p>Pick arrival and departure in the calendar and tell me how many of you are coming (1–3). Your request lands in my inbox.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">2</span>
+            <h3>I confirm</h3>
+            <p>I'll approve it (or get in touch if something clashes). Once approved, your berths show as taken on the calendar for everyone.</p>
+          </article>
+          <article class="step">
+            <span class="step-num">3</span>
+            <h3>Price is set on 1 February</h3>
+            <p>On <strong>1 February 2027</strong> the calendar locks. The total cottage cost is split by the total number of booked person-nights.</p>
+          </article>
+        </div>
+
+        <div class="price-card" id="priceCard">
+          <div class="price-formula">
+            <span class="pf-label">price per person per night</span>
+            <span class="pf-eq">=</span>
+            <span class="pf-frac"><span>total cottage cost</span><span>total booked person-nights</span></span>
+          </div>
+          <div class="meter">
+            <div class="meter-head">
+              <span>Booked person-nights so far</span>
+              <span id="meterText">—</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill" id="meterFill"></div><div class="meter-pending" id="meterPending"></div></div>
+            <p class="meter-note" id="priceNote">Every extra night anyone books lowers the price for <em>everyone</em>. Bring friends!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COTTAGE ===== -->
+    <section class="section section-wood" id="cottage">
+      <div class="container">
+        <p class="eyebrow">The cottage</p>
+        <h2>Ciasa Irma</h2>
+        <p class="section-lede">
+          <em>Ciasa</em> means “house” in Ladin, the old language of the Fassa valley. Ciasa Irma sits on
+          Strada de Gardecia in Pera di Fassa — the road that climbs toward the Catinaccio (Rosengarten)
+          massif, which glows pink at sunset. Inside there&#39;s a wood-panelled stube with a bunk bed, a double bedroom, a kitchen with an
+          old wood-burning stove for shared dinners, and a balcony that looks straight across the valley to the slopes.
+        </p>
+        <div class="features" id="features"></div>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <p class="eyebrow">Gallery</p>
+        <h2>A look inside &amp; around</h2>
+        <div class="gallery" id="galleryGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== LOCATION ===== -->
+    <section class="section section-pine" id="location">
+      <div class="container">
+        <p class="eyebrow">Location</p>
+        <h2>Where we'll be</h2>
+        <p class="section-lede">Strada de Gardecia 7, 38036 San Giovanni di Fassa (Pera). Ski runs are drawn on the map from OpenSnowMap — tap a resort for details.</p>
+        <div class="map-wrap">
+          <div id="map" role="region" aria-label="Map of Ciasa Irma and nearby ski areas"></div>
+        </div>
+        <div class="resorts" id="resorts"></div>
+        <p class="fineprint">Ski area figures are approximate. Check <a href="https://www.dolomitisuperski.com" target="_blank" rel="noopener">dolomitisuperski.com</a> for current lifts, slopes and pass prices.</p>
+      </div>
+    </section>
+
+    <!-- ===== BOOKING ===== -->
+    <section class="section" id="book">
+      <div class="container">
+        <p class="eyebrow">Booking</p>
+        <h2>Grab a berth</h2>
+        <div class="banner" id="statusBanner" hidden></div>
+
+        <div class="booking">
+          <div class="cal-card">
+            <div class="cal-head">
+              <div>
+                <h3>Availability</h3>
+                <p class="cal-hint" id="calHint">Tap your arrival day, then your departure day.</p>
+              </div>
+              <div class="legend">
+                <span><i class="lg lg-free"></i>free</span>
+                <span><i class="lg lg-taken"></i>taken</span>
+                <span><i class="lg lg-pending"></i>pending request</span>
+              </div>
+            </div>
+            <div class="calendar" id="calendar"></div>
+            <p class="cal-loading" id="calLoading">Loading availability…</p>
+          </div>
+
+          <form class="form-card" id="bookingForm" novalidate>
+            <h3>Your request</h3>
+            <div class="field-row">
+              <label>Arrival
+                <input type="date" name="arrival" id="arrival" required>
+              </label>
+              <label>Departure
+                <input type="date" name="departure" id="departure" required>
+              </label>
+            </div>
+
+            <fieldset class="group-size">
+              <legend>How many in your group?</legend>
+              <div class="seg" id="groupSeg">
+                <label><input type="radio" name="groupSize" value="1" checked><span>1</span></label>
+                <label><input type="radio" name="groupSize" value="2"><span>2</span></label>
+                <label><input type="radio" name="groupSize" value="3"><span>3</span></label>
+              </div>
+            </fieldset>
+
+            <div class="summary" id="summary">Select dates to see a summary.</div>
+
+            <label>Your name
+              <input type="text" name="name" autocomplete="name" required maxlength="80">
+            </label>
+            <label>Email
+              <input type="email" name="email" autocomplete="email" required maxlength="120">
+            </label>
+            <label>Who's coming with you? <span class="opt">(optional)</span>
+              <input type="text" name="companions" maxlength="200" placeholder="Names of your group">
+            </label>
+            <label>Message <span class="opt">(optional)</span>
+              <textarea name="message" rows="3" maxlength="1000" placeholder="Ski level, car-sharing, anything else…"></textarea>
+            </label>
+            <!-- honeypot -->
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Send booking request</button>
+            <p class="fineprint">Sending a request doesn't commit you to pay yet — I'll confirm by email, and the final price is set on 1 February.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Ciasa Irma</strong> · Strada de Gardecia 7, 38036 San Giovanni di Fassa (TN)</p>
+      <p class="fineprint">Made for friends. Map data © OpenStreetMap contributors, pistes © OpenSnowMap.</p>
+    </div>
+  </footer>
+
+  <!-- Success dialog -->
+  <dialog class="modal" id="successModal">
+    <div class="modal-icon" aria-hidden="true">⛷️</div>
+    <h3>Request sent!</h3>
+    <p id="successText">Thanks! Your request is on its way. I'll check it and confirm by email soon.</p>
+    <form method="dialog"><button class="btn btn-primary">Back to the site</button></form>
+  </dialog>
+
+  <!-- Lightbox -->
+  <dialog class="lightbox" id="lightbox">
+    <button class="lb-close" aria-label="Close" data-lb="close">×</button>
+    <button class="lb-nav lb-prev" aria-label="Previous" data-lb="prev">‹</button>
+    <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+    <button class="lb-nav lb-next" aria-label="Next" data-lb="next">›</button>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
