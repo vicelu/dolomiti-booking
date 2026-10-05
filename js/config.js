@@ -28,14 +28,14 @@ window.CONFIG = {
   // the site will then explain the formula without showing numbers.
   totalCostEUR: null,
   // Whether your own nights count when dividing the cost (true = you pay your share too).
-  hostSharesCost: true,
+  hostSharesCost: false,
   // Once the price is fixed, put the final per-person-per-night price here (EUR).
   finalPricePerNight: null,
 
   // Show first names of approved guests on the calendar ("who's there").
   showGuestNames: true,
 
-  hostName: "Your host",
+  hostName: "Vicko",
 
   // Gallery: drop your photos into assets/images/ and list them here.
   // The first image is also used as the hero background. Add `span: 2` or `span: 3` to make a photo wider (desktop only).
