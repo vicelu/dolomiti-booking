@@ -260,8 +260,8 @@
     const pistes = L.tileLayer("https://tiles.opensnowmap.org/pistes/{z}/{x}/{y}.png", {
       maxZoom: 18, attribution: "Pistes © OpenSnowMap.org",
     });
-    const map = L.map("map", { scrollWheelZoom: false, layers: [topo, pistes] });
-    L.control.layers({ "Topographic": topo, "Street": osm }, { "Ski pistes": pistes }).addTo(map);
+    const map = L.map("map", { scrollWheelZoom: false, layers: [osm, pistes] });
+    L.control.layers({ "Street": osm, "Topographic": topo }, { "Ski pistes": pistes }).addTo(map);
     map.on("focus", () => map.scrollWheelZoom.enable());
     map.on("blur", () => map.scrollWheelZoom.disable());
 
