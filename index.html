@@ -23,6 +23,7 @@
       <a href="#cottage">The cottage</a>
       <a href="#gallery">Gallery</a>
       <a href="#location">Location</a>
+      <a href="#pools">Car share</a>
       <a href="#book" class="nav-cta">Book a spot</a>
     </nav>
   </header>
@@ -65,7 +66,7 @@
           <article class="step">
             <span class="step-num">1</span>
             <h3>Request your dates</h3>
-            <p>Pick arrival and departure in the calendar and tell me how many of you are coming (1–3). Your request lands in my inbox.</p>
+            <p>Pick arrival and departure in the calendar and tell me how many of you are coming (1–3). Your request lands in my inbox. Coming with friends? <a href="#pools">Start a car-share pool</a> and book together.</p>
           </article>
           <article class="step">
             <span class="step-num">2</span>
@@ -152,6 +153,7 @@
                 <span><i class="lg lg-free"></i>free</span>
                 <span><i class="lg lg-taken"></i>taken</span>
                 <span><i class="lg lg-pending"></i>pending request</span>
+                <span><i class="lg lg-held"></i>pre-reserved (car-share pool)</span>
               </div>
             </div>
             <div class="calendar" id="calendar"></div>
@@ -198,8 +200,31 @@
             <p class="form-error" id="formError" role="alert" hidden></p>
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Send booking request</button>
             <p class="fineprint">Sending a request doesn't commit you to pay yet — I'll confirm by email, and the final price is set on 1 February.</p>
+            <div class="or-pool">
+              <span>Not coming alone, or need a ride?</span>
+              <button type="button" class="btn btn-outline btn-block" id="startPoolBtn">Start a car-share pool for these dates</button>
+            </div>
           </form>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== CAR-SHARE POOLS ===== -->
+    <section class="section section-frost" id="pools">
+      <div class="container">
+        <p class="eyebrow">Car share</p>
+        <h2>Travel together</h2>
+        <p class="section-lede">
+          Start a pool for your dates or join one that's already open. Use the comments to agree on who drives and
+          where to pick everyone up. When everyone has clicked <strong>I'm in</strong>, the booking request comes to me
+          for the whole group. Until then the dates show as a pre-reservation on the calendar. They don't hold the
+          berths, so don't wait too long.
+        </p>
+        <div class="pools-bar">
+          <button type="button" class="btn btn-primary" id="newPoolBtn">Start a pool</button>
+          <label class="pools-filter"><input type="checkbox" id="poolFilter"> Only pools overlapping my selected dates</label>
+        </div>
+        <div class="pools" id="poolList"><p class="pools-empty">Loading pools…</p></div>
       </div>
     </section>
   </main>
@@ -217,6 +242,72 @@
     <h3>Request sent!</h3>
     <p id="successText">Thanks! Your request is on its way. I'll check it and confirm by email soon.</p>
     <form method="dialog"><button class="btn btn-primary">Back to the site</button></form>
+  </dialog>
+
+  <!-- Pool: start / join / edit my details -->
+  <dialog class="modal modal-form" id="poolDialog">
+    <form id="poolForm" novalidate>
+      <h3 id="poolDlgTitle">Start a pool</h3>
+      <p class="dlg-dates" id="poolDlgDates"></p>
+      <div class="dlg-contact">
+        <label>Your name
+          <input type="text" name="name" autocomplete="name" maxlength="80" required>
+        </label>
+        <label>Email <span class="opt">(never shown; for pool updates and your private link)</span>
+          <input type="email" name="email" autocomplete="email" maxlength="120" required>
+        </label>
+      </div>
+      <fieldset class="group-size">
+        <legend>How many of you?</legend>
+        <div class="seg">
+          <label><input type="radio" name="pGroup" value="1" checked><span>1</span></label>
+          <label><input type="radio" name="pGroup" value="2"><span>2</span></label>
+          <label><input type="radio" name="pGroup" value="3"><span>3</span></label>
+        </div>
+      </fieldset>
+      <label>Leaving from <span class="opt">(city or area)</span>
+        <input type="text" name="from" maxlength="120" placeholder="e.g. Zagreb, Ljubljana centre">
+      </label>
+      <label class="check"><input type="checkbox" name="canDrive"> I can drive</label>
+      <label class="dlg-seats">Free seats for others in my car
+        <input type="number" name="seats" min="0" max="8" value="3">
+      </label>
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="form-error" id="poolError" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-quiet" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="poolSubmit">Start pool</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Pool: travel plan -->
+  <dialog class="modal modal-form" id="planDialog">
+    <form id="planForm" novalidate>
+      <h3>Travel plan</h3>
+      <p class="dlg-dates">What the group agreed on. Changing it asks everyone to confirm again.</p>
+      <label>Who drives?
+        <input type="text" name="driver" maxlength="400" list="driverList" placeholder="e.g. Ana's car">
+        <datalist id="driverList"></datalist>
+      </label>
+      <label>Leaving <span class="opt">(when and from where)</span>
+        <input type="text" name="leaving" maxlength="400" placeholder="e.g. Sat 7:00 from Zagreb, Avenue Mall parking">
+      </label>
+      <label>Pickup points
+        <textarea name="pickups" rows="2" maxlength="400" placeholder="e.g. Marko at Ljubljana BTC ~9:30"></textarea>
+      </label>
+      <label>Return trip
+        <input type="text" name="back" maxlength="400" placeholder="e.g. Sun after lunch, same stops">
+      </label>
+      <label>Notes <span class="opt">(fuel split, tolls, skis on the roof…)</span>
+        <textarea name="notes" rows="2" maxlength="400"></textarea>
+      </label>
+      <p class="form-error" id="planError" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-quiet" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="planSubmit">Save plan</button>
+      </div>
+    </form>
   </dialog>
 
   <!-- Lightbox -->
