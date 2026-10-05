@@ -74,6 +74,6 @@ window.CONFIG = {
     { name: "Alpe Lusia – San Pellegrino", village: "Moena", lat: 46.3720, lng: 11.6650, top: 2513, km: 100, lifts: 30,
       note: "Large, varied area, ski-connected to Passo San Pellegrino.", url: "https://www.skiarea.lusia-sanpellegrino.it/" },
     { name: "Marmolada", village: "Malga Ciapela", lat: 46.4277, lng: 11.9118, top: 3265, km: 12, lifts: 3,
-      note: "Queen of the Dolomites — the 12 km 'La Bellunese' run from 3,265 m.", url: "https://www.funiviemarmolada.com/en/" },
+      note: "Queen of the Dolomiti — the 12 km 'La Bellunese' run from 3,265 m.", url: "https://www.funiviemarmolada.com/en/" },
   ],
 };
